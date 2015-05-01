@@ -1,0 +1,77 @@
+{% extends "main.html" %}
+
+{% block content %}
+    <div class="question">
+        <!-- For everyone, display the question -->
+        <pre>{{ question.text }}</pre>
+        <p><b>By:</b> {{ question.author.username }} <b>at:</b> {{ question.pub_date|date:"d M Y - H:i:s" }} <img src="/static/author_icon.png" alt="author" width="15"></p>
+        <p><b>Answer at:</b> {{ question.answer_date|date:"d M Y - H:i:s" }} <img src="/static/clock_icon.png" alt="clock" width="15"></p>
+        {% if question.author == user %} <!-- User is the author -->
+            <p class="rlinks">
+                <img src="/static/edit_icon.png" alt="edit" width="15"> <a href="#qform" onclick="document.getElementById('qform').style.display = 'block';" title="Edit this question">Edit the question » </a>
+            </p>
+            <div id="qform" class="hidden"> <!-- User do not already filled an anwser -->
+                <form action="/{{ question.token }}/edit/" method="post">
+                    {% csrf_token %}
+                    <textarea name="text">{{ question.text }}</textarea>
+                    <p><img src="/static/clock_icon.png" alt="clock" width="15"> Answer will be displayed <input type="number" name="delta" value="{{ delta }}" max="30" min="0" size="2"/> days after question publication.</p>
+                    <p>
+                        <input type="submit" value="Submit" />
+                        <a href="#form" onclick="document.getElementById('qform').style.display = 'none';" title="Hide this form">Cancel</a>
+                    </p>
+                </form>
+            </div>
+        {% endif %}
+    </div>
+    <div class="answer form">
+        {% if current_user_answer %}
+            <h2>Here is your answer</h2>
+            <pre>{{ current_user_answer.text }}</pre>
+            <!-- if answer is not published, user can edit his answer -->
+            {% if not question.is_answer_published or question.author == user %}
+                <p class="rlinks">
+                    <img src="/static/edit_icon.png" alt="edit" width="15"> <a href="#form" onclick="document.getElementById('aform').style.display = 'block';" title="Edit your answer">Edit your answer » </a>
+                </p>
+            {% endif %}
+        {% endif %}
+        <div id="aform" class="{% if current_user_answer and not error %}hidden{% endif %}"> <!-- User do not already filled an anwser -->
+            <h2>Please fill the answer</h2>
+            <p class="error">{{ error }}</p>
+            <form action="/{{ question.token }}/answer-it/" method="post">
+                {% csrf_token %}
+                <textarea name="text" placeholder="Please answer here">{% if current_user_answer %}{{ current_user_answer.text }}{% endif %}</textarea>
+                <p>
+                    <input type="submit" value="Submit" />
+                    {% if current_user_answer %}<a href="#form" onclick="document.getElementById('aform').style.display = 'none';" title="Hide this form">Cancel</a>{% endif %}
+                </p>
+            </form>
+        </div>
+    </div>
+    {% if question.author == user %} <!-- User is the author -->
+        <div class="answers_list">
+            <!-- All answers display -->
+            <h2>Here are the user's answers to this question</h2>
+            <table>
+                <tr>
+                    <th><img src="/static/user_icon.png" alt="user" width="15"></th>
+                    <th>Date</th>
+                    <th>Answer</th>
+                </tr>
+                {% for answer in question.get_all_answers %}
+                    <tr>
+                        <td class="ontop">{{ answer.author }}</td>
+                        <td class="ontop">{{ answer.pub_date|date:"d M Y - H:i:s" }}</td>
+                        <td class="answer"><pre>{{ answer.text }}</pre></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    {% else %} <!-- User is not the author -->
+        {% if question.is_answer_published %} <!-- Author answer is published -->
+            <div class="answer">
+                <h2>Here is the author's answer</h2>
+                <pre>{{ question.get_author_answer.text }}</pre>
+            </div>
+        {% endif %}
+    {% endif %}
+{% endblock %}

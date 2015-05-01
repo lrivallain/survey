@@ -1,0 +1,106 @@
+/*
+    color sheme (not the best one) from :
+    http://www.colorcombos.com/color-schemes/124/ColorCombo124.html 
+*/
+
+
+body {
+    background-color: #E8D0A9;
+    font-family: Verdana,Geneva,sans-serif;
+    font-size:0.85em;
+}
+
+h2 {
+    color:#545454;
+    font-size: 1.2em;
+}
+
+pre {
+    padding: 10px;
+    border-radius: 10px;
+    border: 4px solid #B7AFA3;
+    color: #F5FAFA;
+    white-space: pre-wrap;
+    background-color: #6D929B;
+    font-family: Verdana,Geneva,sans-serif;
+    font-size: 0.9em;
+}
+
+.hidden {
+    display:none;
+}
+
+.question, .answer, .form {
+    max-width: 700px;
+}
+
+.question p, .answer p {
+    text-align: right;
+}
+
+.question pre {
+    border: 4px solid #F5FAFA;
+}
+
+.rlinks {
+    text-align: right;
+}
+
+a {
+    color: #6D929B;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.9em;
+}
+
+
+textarea {
+    font-size: 0.9em;
+    min-height: 200px;
+    width: 95%;
+    border: 1px solid #545454;
+    padding: 10px;
+    border-radius: 5px;
+    font-family: Verdana,Geneva,sans-serif;
+}
+
+input[type="number"] {
+    width: 30px;
+}
+
+input[type="submit"] {
+    border: 1px solid #545454;
+    border-radius: 5px;
+    padding: 5px;
+    font-weight: bold;
+    font-size: 1.1em;
+    color: #F5FAFA;
+    background-color: #6D929B;
+    margin-right: 13px;
+}
+
+.answers_list table {
+    border-collapse: collapse;
+}
+
+.answers_list th {
+    text-align: left;
+    padding-left:15px;
+    border-bottom: 3px solid #545454;
+}
+
+.answers_list td {
+    padding-left:15px;
+    padding-right:15px;
+    border-bottom: 1px solid #545454;
+}
+
+.answers_list .ontop {
+    padding-top: 15px;
+    vertical-align: top;
+}
+
+.error {
+    color: #FF3333;
+    font-style: italic;
+}

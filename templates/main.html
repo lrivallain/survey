@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Run@OVH - Quick survey</title>
+        <link rel="stylesheet" href="/static/survey.css" />
+        <link rel="icon" type="image/png" href="/static/handshake_icon.png" />
+    </head>
+    <body>
+        {% block content %}
+            <div id="form" class="form">
+                <h2>Create a new question</h2>
+                <p class="error">{{ error }}</p>
+                <form action="/create/" method="post">
+                    {% csrf_token %}
+                    <textarea name="question" placeholder="Please create your question here" value="{{ text }}"></textarea>
+                    <p>
+                        <img src="/static/clock_icon.png" alt="clock" width="15"> Answer will be displayed in <input type="number" name="delta" value="{% if delta %}{{ delta }}{% else %}2{% endif %}" max="30" min="0" size="2"/> days.
+                    </p>
+                    <p class="rlinks">
+                        <input type="submit" value="Submit" />
+                    </p>
+                </form>
+                <!-- Reset your pass -->
+                <p class="rlinks">
+                    <img src="/static/key_icon.png" alt="edit" width="15"> <a href="/reset/" title="Reset your pass">Reset your pass » </a>
+                </p>
+                <p class="rlinks">
+                    <img src="/static/logout_icon.png" alt="logout" width="15"> <a href="/logout/" title="End your session">Logout » </a>
+                </p>
+                {% if user.is_staff %}
+                    <p class="rlinks">
+                        <img src="/static/author_icon.png" alt="add user" width="15"> <a href="/admin/auth/user/add/" title="Create a new user">Create a new user » </a>
+                    </p>
+                {% endif %}
+            </div>
+        {% endblock %}
+    </body>
+</html> 

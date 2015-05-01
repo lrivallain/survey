@@ -1,0 +1,17 @@
+{% extends "main.html" %}
+
+{% block content %}
+    <div id="resetform" class="form">
+        <h2>Reset your password</h2>
+        <p class="error">{{ error }}</p>
+        <form action="/reset/" method="post">
+            {% csrf_token %}
+            <p>New password:     <input type="password" name="new"/></p>
+            <p>Confirm password: <input type="password" name="confirm"/></p>
+            <p class="rlinks">
+                <input type="submit" value="Submit" />
+                <a href="/" title="Go back to main page">Cancel</a>
+            </p>
+        </form>
+    </div>
+{% endblock %}
