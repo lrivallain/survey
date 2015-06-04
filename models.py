@@ -17,6 +17,9 @@ def _createToken():
         if not Question.objects.filter(token=token):
             return token # if not, return
 
+def _defaultAnswerDelta():
+    return datetime.now()+timedelta(days=2)
+
 
 class Question(models.Model):
     """
@@ -26,7 +29,7 @@ class Question(models.Model):
     text = models.TextField()
     author = models.ForeignKey(User, editable=False, null=True, blank=True)
     pub_date = models.DateTimeField('date published', editable=False, auto_now_add=True)
-    answer_date = models.DateTimeField('answer publication date', default=datetime.now()+timedelta(days=2))
+    answer_date = models.DateTimeField('answer publication date', default=_defaultAnswerDelta)
 
     def __str__(self):
         return self.token

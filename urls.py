@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, include, url
 
 # Womoobox URLs
-surveypatterns = patterns('',
+urlpatterns = patterns('',
     url(r'^$',                                  'survey.views.index'),
     url(r'create/$',                            'survey.views.question_creation'),
     url(r'reset/$',                             'survey.views.reset'),
